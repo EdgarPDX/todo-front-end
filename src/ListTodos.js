@@ -24,7 +24,7 @@ export default class ListTodos extends Component {
                 <h1>Your Todo's</h1>
                 {
                     this.state.todos.map((todo) => {
-                    return <span>{todo.todo}</span>
+                    return <p>{todo.todo}</p>
                     })
                 }
                 

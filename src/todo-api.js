@@ -28,3 +28,11 @@ export function fetchTodos() {
         return { error: e.message}
     }
 };
+
+export function createTodos(todoData) {
+    const token = localStorage.getItem('token');
+
+    return request.post(`${URL}/api/todos`, todoData)
+        .set('Authorization', token)
+
+};

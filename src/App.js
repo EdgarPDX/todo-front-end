@@ -3,12 +3,14 @@ import {
     BrowserRouter as Router, 
     Route, 
     Switch,
-    Link
+    Link,
+    
   } 
 from 'react-router-dom';
 import AuthPage from './AuthPage.js';
-import DetailTodo from './DetailTodo.js';
+// import DetailTodo from './DetailTodo.js';
 import ListTodos from './ListTodos.js';
+import CreateTodoPage from './CreateTodoPage.js';
 
 export default class App extends Component {
     state = {
@@ -27,23 +29,35 @@ export default class App extends Component {
         return (
             <div>
                 <Router>
-                    <Switch>
-                        <Route 
-                            path="/login" 
+                    <main>
+                        <header>
+                            {
+                                this.state.token &&
+                                <>
+                                    <Link to='/'>TODO LIST</Link>
+                                    <Link to='/createtodo'>CREATE A TODO</Link>
+                                </>
+                            }
+                            
+                        </header>
+                        <Switch>
+                            <Route 
+                                path="/login" 
+                                exact
+                                render={(routerProps) => <AuthPage handleToken={this.handleToken} token={this.state.token} {...routerProps} />} 
+                            />
+                            <Route 
+                                path="/" 
+                                exact
+                                render={(routerProps) => <ListTodos token={this.state.token} {...routerProps} />} 
+                            />
+                            <Route 
+                            path="/createtodo"
                             exact
-                            render={(routerProps) => <AuthPage handleToken={this.handleToken} token={this.state.token} {...routerProps} />} 
-                        />
-                        <Route 
-                            path="/" 
-                            exact
-                            render={(routerProps) => <ListTodos token={this.state.token} {...routerProps} />} 
-                        />
-                        <Route 
-                          path="/todos/:id" 
-                          exact
-                          render={(routerProps) => <DetailTodo {...routerProps} />} 
-                        />
-                    </Switch>
+                            render={(routerProps) => <CreateTodoPage handleToken={this.handleToken} token={this.state.token} {...routerProps} />} 
+                            />
+                        </Switch>
+                    </main>
                 </Router>
             </div>
         )
