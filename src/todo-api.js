@@ -6,7 +6,7 @@ export function signUp(userData){
     try {
         return request.post(`${URL}/auth/signup`, userData);
     } catch(e) {
-        throw { error: e.message }
+        return { error: e.message }
     }
 };
 
@@ -14,10 +14,17 @@ export function signIn(userData) {
     try{
         return request.post(`${URL}/auth/signin`, userData);
     } catch (e) {
-        throw { error: e.message }
+        return { error: e.message }
     }
 };
 
 export function fetchTodos() {
-    return request.post(`${URL}/api/todos`)
-}
+    const token = localStorage.getItem('token');
+    try {
+        return request
+        .get(`${URL}/api/todos`)
+        .set('Authorization', token);
+    } catch(e) {
+        return { error: e.message}
+    }
+};
